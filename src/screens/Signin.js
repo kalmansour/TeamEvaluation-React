@@ -13,6 +13,7 @@ import authStore from "../stores/authStore";
 import { SigninButtonStyled, ScreenTitle } from "./styles";
 
 const Signin = () => {
+  console.log("local storage", localStorage);
   const [user, setUser] = useState({
     username: "",
     password: "",

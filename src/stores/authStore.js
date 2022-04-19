@@ -18,7 +18,7 @@ class AuthStore {
   };
 
   checkForToken = () => {
-    const token = localStorage.getItem("myToken");
+    const token = localStorage.getItem("access_token");
     if (token) {
       const currentTime = Date.now();
       const user = decode(token);
@@ -47,7 +47,6 @@ class AuthStore {
   signin = async (userData) => {
     try {
       const res = await instance.post("/user/login/", userData);
-      console.log("response data", res.data);
       this.setUser(res.data);
     } catch (error) {
       console.log("AuthStore -> signin -> error", error);
@@ -56,11 +55,13 @@ class AuthStore {
 
   signout = () => {
     delete instance.defaults.headers.common.Authorization;
-    localStorage.removeItem("myToken");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
     this.user = null;
   };
 }
 
 const authStore = new AuthStore();
+authStore.checkForToken();
 
 export default authStore;

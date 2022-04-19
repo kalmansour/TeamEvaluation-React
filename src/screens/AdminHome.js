@@ -20,9 +20,10 @@ const AdminHome = () => {
       <h1
         style={{
           textAlign: "center",
+          textTransform: "capitalize",
         }}
       >
-        Welcome to your admin page
+        Welcome {authStore.user.first_name}
       </h1>
       <Link to="/">
         <h4 onClick={handleLogout}>Logout?</h4>
