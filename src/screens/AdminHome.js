@@ -15,21 +15,70 @@ const AdminHome = () => {
     if (!authStore.user) return <Navigate to="/" />;
   };
 
+  const semesterList = semestersData.map((semester) => (
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {semester.name}
+        <span class="badge bg-primary">+</span>
+      </li>
+    </ul>
+  ));
+
   return (
     <div>
-      <h1
+      <div
         style={{
-          textAlign: "center",
-          textTransform: "capitalize",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        Welcome {authStore.user.first_name}
-      </h1>
-      <Link to="/">
-        <h4 onClick={handleLogout}>Logout?</h4>
-      </Link>
+        <h1
+          style={{
+            textAlign: "center",
+            textTransform: "capitalize",
+          }}
+        >
+          {authStore.user.first_name}'s Admin Page
+        </h1>
+        <Link to="/">
+          <button
+            class="btn btn-danger"
+            onClick={handleLogout}
+            style={{ position: "absolute", marginTop: -20, marginLeft: 200 }}
+          >
+            Logout
+          </button>
+        </Link>
+      </div>
+      <div
+        style={{
+          marginLeft: "auto",
+          marginRight: "auto",
+          marginTop: 20,
+          paddingLeft: 10,
+          paddingRight: 10,
+        }}
+      >
+        {semesterList}
+      </div>
     </div>
   );
 };
 
 export default observer(AdminHome);
+
+const semestersData = [
+  {
+    name: "Spring 2023",
+  },
+  {
+    name: "Fall 2022",
+  },
+  {
+    name: "Spring 2022",
+  },
+  {
+    name: "Fall 2021",
+  },
+];
