@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import { observer } from "mobx-react";
 
 // Navigation
-import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+
+// Components
+import SemesterItem from "../components/SemesterItem";
+import ProjectItem from "../components/ProjectItem";
 
 // Stores
 import authStore from "../stores/authStore";
@@ -21,23 +24,23 @@ const AdminHome = () => {
     if (!authStore.user) return <Navigate to="/" />;
   };
 
+  const projectsList = projectsData.map((project) => (
+    <ProjectItem project={project} key={project.id} />
+  ));
+
   const usersSemesters = semesterStore.semesters.filter(
     (semester) => semester.added_by.username === authStore.user.username
   );
 
-  const semesterList = usersSemesters.reverse().map((semester) => (
-    <ul class="list-group">
-      <li
-        class="list-group-item d-flex justify-content-between align-items-center"
+  const semesterList = usersSemesters
+    .reverse()
+    .map((semester) => (
+      <SemesterItem
+        semester={semester}
         key={semester.id}
-      >
-        {semester.name}
-        <span class="badge bg-primary" key={semester.id}>
-          +
-        </span>
-      </li>
-    </ul>
-  ));
+        projectsList={projectsList}
+      />
+    ));
 
   const handleChange = (event) =>
     setNewSemester({ ...newSemester, [event.target.name]: event.target.value });
@@ -125,3 +128,15 @@ const AdminHome = () => {
 };
 
 export default observer(AdminHome);
+
+const projectsData = [
+  {
+    name: "Project 1",
+  },
+  {
+    name: "Project 2",
+  },
+  {
+    name: "Project 3",
+  },
+];
