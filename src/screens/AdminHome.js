@@ -1,5 +1,5 @@
 // Libraries
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react";
 
 // Navigation
@@ -8,21 +8,45 @@ import { Navigate } from "react-router-dom";
 
 // Stores
 import authStore from "../stores/authStore";
+import semesterStore from "../stores/semesterStore";
 
 const AdminHome = () => {
+  const [show, setShow] = useState(false);
+  const [newSemester, setNewSemester] = useState({
+    name: "",
+  });
+
   const handleLogout = () => {
     authStore.signout();
     if (!authStore.user) return <Navigate to="/" />;
   };
 
-  const semesterList = semestersData.map((semester) => (
+  const usersSemesters = semesterStore.semesters.filter(
+    (semester) => semester.added_by.username === authStore.user.username
+  );
+
+  const semesterList = usersSemesters.map((semester) => (
     <ul class="list-group">
-      <li class="list-group-item d-flex justify-content-between align-items-center">
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center"
+        key={semester.id}
+      >
         {semester.name}
-        <span class="badge bg-primary">+</span>
+        <span class="badge bg-primary" key={semester.id}>
+          +
+        </span>
       </li>
     </ul>
   ));
+
+  const handleChange = (event) =>
+    setNewSemester({ ...newSemester, [event.target.name]: event.target.value });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    semesterStore.createSemester(newSemester);
+    setShow(false);
+  };
 
   return (
     <div>
@@ -51,6 +75,15 @@ const AdminHome = () => {
           </button>
         </Link>
       </div>
+      <div style={{ marginTop: 100, marginBottom: 140, marginRight: 10 }}>
+        <button
+          type="button"
+          class="btn btn-success float-end"
+          onClick={() => setShow(true)}
+        >
+          Add Semester
+        </button>
+      </div>
       <div
         style={{
           marginLeft: "auto",
@@ -60,6 +93,33 @@ const AdminHome = () => {
           paddingRight: 10,
         }}
       >
+        {show ? (
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter semester name"
+              aria-label="Recipient's username with two button addons"
+              onChange={handleChange}
+              name={"name"}
+              value={newSemester.name}
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              onClick={handleSubmit}
+            >
+              Save
+            </button>
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              onClick={() => setShow(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        ) : null}
         {semesterList}
       </div>
     </div>
@@ -67,18 +127,3 @@ const AdminHome = () => {
 };
 
 export default observer(AdminHome);
-
-const semestersData = [
-  {
-    name: "Spring 2023",
-  },
-  {
-    name: "Fall 2022",
-  },
-  {
-    name: "Spring 2022",
-  },
-  {
-    name: "Fall 2021",
-  },
-];
