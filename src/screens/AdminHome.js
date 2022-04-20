@@ -25,7 +25,7 @@ const AdminHome = () => {
     (semester) => semester.added_by.username === authStore.user.username
   );
 
-  const semesterList = usersSemesters.map((semester) => (
+  const semesterList = usersSemesters.reverse().map((semester) => (
     <ul class="list-group">
       <li
         class="list-group-item d-flex justify-content-between align-items-center"
@@ -94,31 +94,29 @@ const AdminHome = () => {
         }}
       >
         {show ? (
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter semester name"
-              aria-label="Recipient's username with two button addons"
-              onChange={handleChange}
-              name={"name"}
-              value={newSemester.name}
-            />
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              onClick={handleSubmit}
-            >
-              Save
-            </button>
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              onClick={() => setShow(false)}
-            >
-              Cancel
-            </button>
-          </div>
+          <form onSubmit={handleSubmit}>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter semester name"
+                aria-label="Recipient's username with two button addons"
+                onChange={handleChange}
+                name={"name"}
+                value={newSemester.name}
+              />
+              <button class="btn btn-outline-secondary" type="submit">
+                Save
+              </button>
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                onClick={() => setShow(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
         ) : null}
         {semesterList}
       </div>

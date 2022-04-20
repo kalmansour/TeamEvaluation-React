@@ -10,10 +10,9 @@ import { Navigate } from "react-router-dom";
 import authStore from "../stores/authStore";
 
 // Styles
-import { SigninButtonStyled, ScreenTitle } from "./styles";
+import { ScreenTitle } from "./styles";
 
 const Signin = () => {
-  console.log("local storage", localStorage);
   const [user, setUser] = useState({
     username: "",
     password: "",
