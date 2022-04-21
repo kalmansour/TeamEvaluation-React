@@ -2,8 +2,19 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react";
 
-const SemesterItem = ({ semester, projectsList }) => {
+// Components
+import ProjectItem from "../components/ProjectItem";
+
+const SemesterItem = ({ semester, projects }) => {
   const [showProject, setShowProject] = useState(false);
+
+  const semesterProjects = projects.filter(
+    (project) => project.semester.id === semester.id
+  );
+
+  const projectsList = semesterProjects.map((project) => (
+    <ProjectItem project={project} key={project.id} />
+  ));
 
   function showProjecthandler() {
     !showProject ? setShowProject(true) : setShowProject(false);
