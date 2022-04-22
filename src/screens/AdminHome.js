@@ -7,11 +7,11 @@ import { Link, Navigate } from "react-router-dom";
 
 // Components
 import SemesterItem from "../components/SemesterItem";
-import ProjectItem from "../components/ProjectItem";
 
 // Stores
 import authStore from "../stores/authStore";
 import semesterStore from "../stores/semesterStore";
+import projectStore from "../stores/projectStore";
 
 const AdminHome = () => {
   const [show, setShow] = useState(false);
@@ -24,10 +24,6 @@ const AdminHome = () => {
     if (!authStore.user) return <Navigate to="/" />;
   };
 
-  const projectsList = projectsData.map((project) => (
-    <ProjectItem project={project} key={project.id} />
-  ));
-
   const usersSemesters = semesterStore.semesters.filter(
     (semester) => semester.added_by.username === authStore.user.username
   );
@@ -38,16 +34,16 @@ const AdminHome = () => {
       <SemesterItem
         semester={semester}
         key={semester.id}
-        projectsList={projectsList}
+        projects={projectStore.projects}
       />
     ));
 
   const handleChange = (event) =>
     setNewSemester({ ...newSemester, [event.target.name]: event.target.value });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    semesterStore.createSemester(newSemester);
+    await semesterStore.createSemester(newSemester);
     setShow(false);
   };
 
@@ -128,15 +124,3 @@ const AdminHome = () => {
 };
 
 export default observer(AdminHome);
-
-const projectsData = [
-  {
-    name: "Project 1",
-  },
-  {
-    name: "Project 2",
-  },
-  {
-    name: "Project 3",
-  },
-];
