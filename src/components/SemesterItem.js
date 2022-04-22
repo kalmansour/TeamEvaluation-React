@@ -16,7 +16,7 @@ const SemesterItem = ({ semester, projects }) => {
   );
 
   const projectsList = semesterProjects.map((project) => (
-    <ProjectItem project={project} key={project.id} teamsData={teamsData} />
+    <ProjectItem project={project} key={project.id} />
   ));
 
   function showProjecthandler() {
@@ -56,15 +56,3 @@ const SemesterItem = ({ semester, projects }) => {
 };
 
 export default observer(SemesterItem);
-
-const teamsData = [
-  {
-    name: "Team A",
-  },
-  {
-    name: "Team B",
-  },
-  {
-    name: "Team C",
-  },
-];
