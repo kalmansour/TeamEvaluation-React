@@ -2,7 +2,8 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-const ProjectItem = ({ project }) => {
+const ProjectItem = ({ project, teamsData }) => {
+  const teams = teamsData.map((team) => team.name);
   return (
     <ul class="list-group">
       <li
@@ -10,7 +11,7 @@ const ProjectItem = ({ project }) => {
         key={project.id}
         style={{ background: "linen" }}
       >
-        {project.name}
+        {project.name} - {teams.join(", ")}
       </li>
     </ul>
   );
