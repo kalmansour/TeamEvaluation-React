@@ -18,11 +18,11 @@ class ProjectStore {
     }
   };
 
-  createProject = async (newProject) => {
+  createProject = async (newProject, semesterId) => {
     try {
       const formData = new FormData();
       for (const key in newProject) formData.append(key, newProject[key]);
-      const res = await instance.post("/project/", formData);
+      const res = await instance.post(`/project/${semesterId}/`, formData);
       this.projects.push(res.data);
     } catch (error) {
       console.log("ProjectStore -> projectList -> error", error);

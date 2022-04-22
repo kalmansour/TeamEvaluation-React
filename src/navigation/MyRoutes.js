@@ -6,11 +6,13 @@ import { observer } from "mobx-react";
 import Signin from "../screens/Signin";
 import Signup from "../screens/Signup";
 import AdminHome from "../screens/AdminHome";
+import AddProject from "../screens/AddProject";
 
 const MyRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/project/:semesterId" element={<AddProject />} />
         <Route path="/home/" element={<AdminHome />} />
         <Route path="/register/" element={<Signup />} />
         <Route path="/" element={<Signin />} />

@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react";
 
+// Navigation
+import { Link } from "react-router-dom";
+
 // Components
 import ProjectItem from "../components/ProjectItem";
 
@@ -38,6 +41,13 @@ const SemesterItem = ({ semester, projects }) => {
       {showProject ? (
         <div style={{ padding: 10 }} class="border">
           <h4 style={{ textAlign: "center" }}>Projects</h4>
+          <div style={{ marginTop: 10, marginBottom: 60 }}>
+            <Link to={`/project/${semester.id}`}>
+              <button type="button" class="btn btn-primary float-end">
+                Add Project
+              </button>
+            </Link>
+          </div>
           {projectsList}
         </div>
       ) : null}

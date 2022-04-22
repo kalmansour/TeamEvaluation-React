@@ -41,9 +41,9 @@ const AdminHome = () => {
   const handleChange = (event) =>
     setNewSemester({ ...newSemester, [event.target.name]: event.target.value });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    semesterStore.createSemester(newSemester);
+    await semesterStore.createSemester(newSemester);
     setShow(false);
   };
 
@@ -124,15 +124,3 @@ const AdminHome = () => {
 };
 
 export default observer(AdminHome);
-
-// const projectsData = [
-//   {
-//     name: "Project 1",
-//   },
-//   {
-//     name: "Project 2",
-//   },
-//   {
-//     name: "Project 3",
-//   },
-// ];
