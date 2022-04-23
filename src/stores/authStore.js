@@ -29,13 +29,13 @@ class AuthStore {
 
   signup = async (userData) => {
     try {
-      const res = await instance.post("/user/register/", userData);
+      await instance.post("/user/register/", userData);
       const login_data = {
         username: userData.username,
         password: userData.password,
       };
-      const res2 = await instance.post("/user/login/", login_data);
-      this.setUser(res2.data.access);
+      const res = await instance.post("/user/login/", login_data);
+      this.setUser(res.data.access);
     } catch (error) {
       console.log("AuthStore -> signup -> error", error);
     }

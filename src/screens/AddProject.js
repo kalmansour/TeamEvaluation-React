@@ -9,6 +9,9 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import projectStore from "../stores/projectStore";
 import semesterStore from "../stores/semesterStore";
 
+// Components
+import CriteriaPicker from "../components/CriteriaPicker";
+
 const AddProject = () => {
   let navigate = useNavigate();
   const { semesterId } = useParams();
@@ -97,7 +100,16 @@ const AddProject = () => {
                 placeholder="weight"
                 aria-label="weight"
                 aria-describedby="basic-addon1"
+                onChange={handleChange}
+                name={"weight"}
+                value={newProject.weight}
               />
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">
+                Criteria:
+              </span>
+              <CriteriaPicker dummyCriteriaData={dummyCriteriaData} />
             </div>
             <Link to="/home">
               <button class="btn btn-outline-danger float-end" type="button">
@@ -119,3 +131,26 @@ const AddProject = () => {
 };
 
 export default observer(AddProject);
+
+const dummyCriteriaData = [
+  {
+    id: 1,
+    name: "presentation",
+    weight: 10,
+  },
+  {
+    id: 2,
+    name: "team effort",
+    weight: 20,
+  },
+  {
+    id: 3,
+    name: "functionality",
+    weight: 30,
+  },
+  {
+    id: 4,
+    name: "design",
+    weight: 40,
+  },
+];
