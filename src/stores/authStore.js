@@ -9,23 +9,20 @@ class AuthStore {
   user = null;
 
   setUser = (token) => {
-    const token_access = token.access;
-    const token_refresh = token.refresh;
-    instance.defaults.headers.common.Authorization = `Bearer ${token_access}`;
-    this.user = decode(token_access);
-    localStorage.setItem("access_token", token_access);
-    localStorage.setItem("refresh_token", token_refresh);
+    instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+    this.user = decode(token);
+    localStorage.setItem("access_token", token);
   };
 
   checkForToken = () => {
     const token = localStorage.getItem("access_token");
     if (token) {
-      const currentTime = Date.now();
+      const currentTime = Date.now() / 1000;
       const user = decode(token);
       if (user.exp >= currentTime) {
         this.setUser(token);
       } else {
-        this.signout();
+        this.logout();
       }
     }
   };
@@ -38,7 +35,7 @@ class AuthStore {
         password: userData.password,
       };
       const res2 = await instance.post("/user/login/", login_data);
-      this.setUser(res2.data);
+      this.setUser(res2.data.access);
     } catch (error) {
       console.log("AuthStore -> signup -> error", error);
     }
@@ -47,7 +44,7 @@ class AuthStore {
   signin = async (userData) => {
     try {
       const res = await instance.post("/user/login/", userData);
-      this.setUser(res.data);
+      this.setUser(res.data.access);
     } catch (error) {
       console.log("AuthStore -> signin -> error", error);
     }
@@ -56,7 +53,6 @@ class AuthStore {
   signout = () => {
     delete instance.defaults.headers.common.Authorization;
     localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
     this.user = null;
   };
 }
