@@ -22,7 +22,7 @@ class AuthStore {
       if (user.exp >= currentTime) {
         this.setUser(token);
       } else {
-        this.logout();
+        this.signout();
       }
     }
   };
