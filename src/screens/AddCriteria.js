@@ -3,48 +3,26 @@ import React, { useState } from "react";
 import { observer } from "mobx-react";
 
 // Navigation
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // Stores
-import projectStore from "../stores/projectStore";
-import semesterStore from "../stores/semesterStore";
 import criteriaStore from "../stores/criteriaStore";
 
-// Components
-import CriteriaPicker from "../components/CriteriaPicker";
-
-const AddProject = () => {
+const AddCriteria = () => {
   let navigate = useNavigate();
-  const { semesterId } = useParams();
-  const [selectedCriteria, setSelectedCriteria] = useState([]);
-  const [newProject, setNewProject] = useState({
+  const [newCriteria, setNewCriteria] = useState({
     name: "",
     weight: "",
-    criteria: selectedCriteria,
   });
 
   const handleChange = (event) =>
-    setNewProject({ ...newProject, [event.target.name]: event.target.value });
+    setNewCriteria({ ...newCriteria, [event.target.name]: event.target.value });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await projectStore.createProject(newProject, semesterId);
+    await criteriaStore.createCriteria(newCriteria);
     navigate("/home");
   };
-
-  const handleCriteriaSelect = (name) => {
-    if (!selectedCriteria.includes(name)) {
-      setSelectedCriteria([...selectedCriteria, name]);
-      setNewProject({ ...newProject, criteria: selectedCriteria });
-    } else
-      setSelectedCriteria([...selectedCriteria.filter((obj) => obj !== name)]);
-    setNewProject({ ...newProject, criteria: selectedCriteria });
-  };
-
-  const findSemester = semesterStore.semesters.filter(
-    (semester) => semester.id === parseInt(semesterId)
-  );
-
   return (
     <div>
       <div
@@ -61,15 +39,8 @@ const AddProject = () => {
               textTransform: "capitalize",
             }}
           >
-            Add Project
+            Add Criteria
           </h1>
-          <h4
-            style={{
-              textAlign: "center",
-            }}
-          >
-            {findSemester[0].name}
-          </h4>
         </div>
       </div>
       <div
@@ -89,17 +60,17 @@ const AddProject = () => {
           <form onSubmit={handleSubmit}>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">
-                Project Name:
+                Criteria Name:
               </span>
               <input
                 type="text"
                 class="form-control"
-                placeholder="name"
+                placeholder="Enter criteria name"
                 aria-label="name"
                 aria-describedby="basic-addon1"
                 onChange={handleChange}
                 name={"name"}
-                value={newProject.name}
+                value={newCriteria.name}
               />
             </div>
             <div class="input-group mb-3">
@@ -109,29 +80,13 @@ const AddProject = () => {
               <input
                 type="text"
                 class="form-control"
-                placeholder="weight"
+                placeholder="Enter criteria weight"
                 aria-label="weight"
                 aria-describedby="basic-addon1"
                 onChange={handleChange}
                 name={"weight"}
-                value={newProject.weight}
+                value={newCriteria.weight}
               />
-            </div>
-            <div style={{ marginBottom: 100 }}>
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">
-                  Criteria:
-                </span>
-                <CriteriaPicker
-                  criterias={criteriaStore.criterias}
-                  handleCriteriaSelect={handleCriteriaSelect}
-                />
-              </div>
-              <Link to="/addCriteria">
-                <button type="button" class="btn btn-primary float-end">
-                  Add Criteria
-                </button>
-              </Link>
             </div>
             <Link to="/home">
               <button class="btn btn-outline-danger float-end" type="button">
@@ -152,4 +107,4 @@ const AddProject = () => {
   );
 };
 
-export default observer(AddProject);
+export default observer(AddCriteria);
