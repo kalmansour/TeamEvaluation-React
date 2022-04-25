@@ -7,6 +7,7 @@ class ProjectStore {
   }
   projects = [];
   loading = true;
+  project = null;
 
   fetchProjects = async () => {
     try {
@@ -15,6 +16,16 @@ class ProjectStore {
       this.loading = false;
     } catch (error) {
       console.log("ProjectStore -> projectList -> error", error);
+    }
+  };
+
+  fetchProjectDetails = async (projectId) => {
+    try {
+      const res = await instance.get(`/projects/${projectId}`);
+      this.project = res.data;
+      this.loading = false;
+    } catch (error) {
+      console.log("ProjectStore -> fetchProjectDetails -> error", error);
     }
   };
 
@@ -30,5 +41,6 @@ class ProjectStore {
 
 const projectStore = new ProjectStore();
 projectStore.fetchProjects();
+// projectStore.fetchProjectDetails();
 
 export default projectStore;

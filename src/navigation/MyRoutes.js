@@ -8,11 +8,13 @@ import Signup from "../screens/Signup";
 import AdminHome from "../screens/AdminHome";
 import AddProject from "../screens/AddProject";
 import AddCriteria from "../screens/AddCriteria";
+import ProjectDetailScreen from "../screens/ProjectDetailScreen";
 
 const MyRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/projects/:projectId" element={<ProjectDetailScreen />} />
         <Route path="/addCriteria/" element={<AddCriteria />} />
         <Route path="/project/:semesterId" element={<AddProject />} />
         <Route path="/home/" element={<AdminHome />} />
