@@ -1,6 +1,9 @@
 // Libraries
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react";
+
+// Navigation
+import { Link } from "react-router-dom";
 
 // Stores
 import projectStore from "../stores/projectStore";
@@ -11,14 +14,17 @@ import TeamHeader from "../components/TeamHeader";
 
 // Styles
 import "./styles.css";
+import { BsHouseFill, BsLockFill, BsShareFill } from "react-icons/bs";
+import ShareLinkModal from "../components/ShareLinkModal";
 
 const ProjectDetailScreen = () => {
+  const [modalIsOpen, setIsOpen] = React.useState(false);
   const project = projectStore.project;
 
   const teams = teamStore.teams.filter(
     (team) => team.project.id === project.id
   );
-  const teamsList = teams.map((team, index) => (
+  const teamsList = teams.map((team) => (
     <TeamHeader team={team} key={team.id} />
   ));
 
@@ -35,9 +41,46 @@ const ProjectDetailScreen = () => {
     );
   }
 
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <div>
       <div>
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container-fluid">
+            <Link to="/home">
+              <BsHouseFill size={40} color={"black"} />
+            </Link>
+            <div
+              class="collapse navbar-collapse position-absolute top-0 end-0"
+              id="navbarContent"
+            >
+              <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                  <BsShareFill
+                    size={40}
+                    color={"black"}
+                    style={{ margin: 10 }}
+                    onClick={openModal}
+                  />
+                </li>
+                <li class="nav-item">
+                  <BsLockFill
+                    size={40}
+                    color={"black"}
+                    style={{ margin: 10 }}
+                  />
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
         <div
           style={{
             display: "flex",
@@ -137,6 +180,13 @@ const ProjectDetailScreen = () => {
           ))}
         </table>
         <h2 style={{ textAlign: "right" }}>Total: 100%</h2>
+      </div>
+      <div style={{ position: "absolute", zIndex: 1 }}>
+        <ShareLinkModal
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+          url={project.detail}
+        />
       </div>
     </div>
   );
