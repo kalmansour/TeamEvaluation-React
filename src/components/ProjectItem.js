@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 // Stores
 import teamStore from "../stores/teamStore";
+import projectStore from "../stores/projectStore";
 
 // Components
 import AddTeamModal from "./AddTeamModal";
@@ -39,12 +40,18 @@ const ProjectItem = ({ project }) => {
     (team) => team.project.id === project.id
   );
   const teamsList = teams.map((team) => team.name);
+
+  const handleProjectDetailsChange = async (id) => {
+    await projectStore.fetchProjectDetails(id);
+    navigate(`/projects/${id}`);
+  };
+
   return (
     <ul class="list-group">
       <li
-        class="list-group-item d-flex justify-content-between align-items-center"
+        class="list-group-item d-flex justify-content-between align-items-center list-group-item-action list-group-item-warning"
         key={project.id}
-        style={{ background: "linen" }}
+        onClick={() => handleProjectDetailsChange(project.id)}
       >
         {project.name} -{" "}
         {teams.length > 0 ? teamsList.join(", ") : "No teams yet"}

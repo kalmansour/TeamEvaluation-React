@@ -23,7 +23,6 @@ const AddTeamModal = ({
   project,
   newTeam,
 }) => {
-  console.log("newTeam", newTeam);
   return (
     <div>
       <Modal

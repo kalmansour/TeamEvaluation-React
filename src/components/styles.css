@@ -1,0 +1,7 @@
+.teamName:hover {
+    color: blue;
+  }
+
+.teamName:active {
+    color: lightcyan;
+  }
