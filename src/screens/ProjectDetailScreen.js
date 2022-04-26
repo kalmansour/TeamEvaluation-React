@@ -1,5 +1,5 @@
 // Libraries
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react";
 
 // Navigation
@@ -15,14 +15,16 @@ import TeamHeader from "../components/TeamHeader";
 // Styles
 import "./styles.css";
 import { BsHouseFill, BsLockFill, BsShareFill } from "react-icons/bs";
+import ShareLinkModal from "../components/ShareLinkModal";
 
 const ProjectDetailScreen = () => {
+  const [modalIsOpen, setIsOpen] = React.useState(false);
   const project = projectStore.project;
 
   const teams = teamStore.teams.filter(
     (team) => team.project.id === project.id
   );
-  const teamsList = teams.map((team, index) => (
+  const teamsList = teams.map((team) => (
     <TeamHeader team={team} key={team.id} />
   ));
 
@@ -37,6 +39,14 @@ const ProjectDetailScreen = () => {
       },
       [arr[0]]
     );
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
   }
 
   return (
@@ -57,6 +67,7 @@ const ProjectDetailScreen = () => {
                     size={40}
                     color={"black"}
                     style={{ margin: 10 }}
+                    onClick={openModal}
                   />
                 </li>
                 <li class="nav-item">
@@ -169,6 +180,13 @@ const ProjectDetailScreen = () => {
           ))}
         </table>
         <h2 style={{ textAlign: "right" }}>Total: 100%</h2>
+      </div>
+      <div style={{ position: "absolute", zIndex: 1 }}>
+        <ShareLinkModal
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+          url={project.detail}
+        />
       </div>
     </div>
   );
