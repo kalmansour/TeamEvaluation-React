@@ -47,35 +47,42 @@ const ProjectItem = ({ project }) => {
   };
 
   return (
-    <ul class="list-group">
-      <li
-        class="list-group-item d-flex justify-content-between align-items-center list-group-item-action list-group-item-warning"
-        key={project.id}
-        onClick={() => handleProjectDetailsChange(project.id)}
-      >
-        {project.name} -{" "}
-        {teams.length > 0 ? teamsList.join(", ") : "No teams yet"}
+    <div>
+      <ul class="list-group">
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center list-group-item-action list-group-item-warning"
+          key={project.id}
+          onClick={() => handleProjectDetailsChange(project.id)}
+        >
+          {project.name} -{" "}
+          {teams.length > 0 ? teamsList.join(", ") : "No teams yet"}
+        </li>
         <button
           type="button"
           class="btn btn-outline-dark"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
           onClick={openModal}
+          style={{
+            position: "absolute",
+            zIndex: 1,
+            right: 20,
+          }}
         >
           Add team
         </button>
-        <div style={{ position: "absolute", zIndex: 1 }}>
-          <AddTeamModal
-            modalIsOpen={modalIsOpen}
-            closeModal={closeModal}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            newTeam={newTeam}
-            project={project}
-          />
-        </div>
-      </li>
-    </ul>
+      </ul>
+      <div style={{ position: "absolute", zIndex: 1 }}>
+        <AddTeamModal
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          newTeam={newTeam}
+          project={project}
+        />
+      </div>
+    </div>
   );
 };
 
