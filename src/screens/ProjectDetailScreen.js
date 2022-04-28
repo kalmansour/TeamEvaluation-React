@@ -1,5 +1,5 @@
 // Libraries
-import React, { useState } from "react";
+import React from "react";
 import { observer } from "mobx-react";
 
 // Navigation
@@ -8,14 +8,15 @@ import { Link } from "react-router-dom";
 // Stores
 import projectStore from "../stores/projectStore";
 import teamStore from "../stores/teamStore";
+import scoreStore from "../stores/scoreStore";
 
 // Components
 import TeamHeader from "../components/TeamHeader";
+import ShareLinkModal from "../components/ShareLinkModal";
 
 // Styles
 import "./styles.css";
 import { BsHouseFill, BsLockFill, BsShareFill } from "react-icons/bs";
-import ShareLinkModal from "../components/ShareLinkModal";
 
 const ProjectDetailScreen = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -27,6 +28,14 @@ const ProjectDetailScreen = () => {
   const teamsList = teams.map((team) => (
     <TeamHeader team={team} key={team.id} />
   ));
+  const scores = scoreStore.scores;
+  const judges = scoreStore.scores.map((score) => score.judge);
+
+  function onlyUniqueJudges(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+
+  const uniqueJudges = judges.filter(onlyUniqueJudges);
 
   function intersperse(arr, sep) {
     if (arr.length === 0) {
@@ -113,7 +122,7 @@ const ProjectDetailScreen = () => {
                 color: "grey",
               }}
             >
-              This project has been graded by 2 judges
+              This project has been graded by {uniqueJudges.length} judges
             </h6>
             <div style={{ display: "flex", flexDirection: "row" }}>
               {teamsList.length > 0 ? (
@@ -172,7 +181,13 @@ const ProjectDetailScreen = () => {
             <tbody>
               <tr>
                 <th scope="row">{criteria_.name}</th>
-                <td>20 %</td>
+                <td>
+                  {
+                    scores.filter(
+                      (score) => score.criteria.id === criteria_.id
+                    )[0].score
+                  }
+                </td>
                 <td>{criteria_.weight}</td>
                 <td>{project.weight}</td>
               </tr>
