@@ -9,15 +9,17 @@ class ProjectStore {
   loading = true;
   project = null;
 
-  fetchProjects = async () => {
+  fetchProjects = flow(function* () {
     try {
-      const res = await instance.get("/projects/");
-      this.projects = res.data;
-      this.loading = false;
+      const res = yield instance.get("/projects/");
+      runInAction(() => {
+        this.projects = res.data;
+        this.loading = false;
+      });
     } catch (error) {
       console.log("ProjectStore -> projectList -> error", error);
     }
-  };
+  });
 
   fetchProjectDetails = flow(function* (projectId) {
     try {

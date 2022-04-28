@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, flow, runInAction } from "mobx";
 import instance from "./instance";
 
 class TeamStore {
@@ -8,22 +8,26 @@ class TeamStore {
   teams = [];
   loading = true;
 
-  fetchTeams = async () => {
+  fetchTeams = flow(function* () {
     try {
-      const res = await instance.get("/teams/");
-      this.teams = res.data;
-      this.loading = false;
+      const res = yield instance.get("/teams/");
+      runInAction(() => {
+        this.teams = res.data;
+        this.loading = false;
+      });
     } catch (error) {
       console.log("TeamStore -> teamList -> error", error);
     }
-  };
+  });
 
   createTeam = async (newTeam, projectId) => {
     try {
       const formData = new FormData();
       for (const key in newTeam) formData.append(key, newTeam[key]);
       const res = await instance.post(`/team/${projectId}/`, formData);
-      this.teams.push(res.data);
+      runInAction(() => {
+        this.teams.push(res.data);
+      });
     } catch (error) {
       console.log("TeamStore -> createTeam -> error", error);
     }

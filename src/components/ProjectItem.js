@@ -26,6 +26,8 @@ const ProjectItem = ({ project }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await teamStore.createTeam(newTeam, project.id);
+    closeModal();
+    teamStore.fetchTeams();
     navigate("/home");
   };
 
@@ -37,7 +39,7 @@ const ProjectItem = ({ project }) => {
     setIsOpen(false);
   }
   const teams = teamStore.teams.filter(
-    (team) => team.project.id === project.id
+    (team) => team.project?.id === project?.id
   );
   const teamsList = teams.map((team) => team.name);
 

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, flow, runInAction } from "mobx";
 import instance from "./instance";
 
 class SemesterStore {
@@ -8,22 +8,26 @@ class SemesterStore {
   semesters = [];
   loading = true;
 
-  fetchSemesters = async () => {
+  fetchSemesters = flow(function* () {
     try {
-      const res = await instance.get("/semesters/");
-      this.semesters = res.data;
-      this.loading = false;
+      const res = yield instance.get("/semesters/");
+      runInAction(() => {
+        this.semesters = res.data;
+        this.loading = false;
+      });
     } catch (error) {
       console.log("SemesterStore -> semesterList -> error", error);
     }
-  };
+  });
 
   createSemester = async (newSemester) => {
     try {
       const formData = new FormData();
       for (const key in newSemester) formData.append(key, newSemester[key]);
       const res = await instance.post("/semester/", formData);
-      this.semesters.push(res.data);
+      runInAction(() => {
+        this.semesters.push(res.data);
+      });
     } catch (error) {
       console.log("SemesterStore -> semesterList -> error", error);
     }
