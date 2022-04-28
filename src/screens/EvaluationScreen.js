@@ -1,11 +1,11 @@
-import React from "react";
+// Libraries
+import React, { useState } from "react";
 import { observer } from "mobx-react";
 
 // Navigation
 import { useParams } from "react-router-dom";
 
 // Stores
-import projectStore from "../stores/projectStore";
 import teamStore from "../stores/teamStore";
 
 // Component
@@ -13,14 +13,23 @@ import TeamItem from "../components/TeamItem";
 
 const EvaluationScreen = () => {
   const { projectId, judgeName } = useParams();
+  const [newScore, setNewScore] = useState({
+    judge: judgeName,
+    score: "",
+  });
 
   const teams = teamStore.teams.filter(
     (team) => team.project.id === parseInt(projectId)
   );
-  // projectStore.fetchProjectDetails(parseInt(projectId));
-  // const project = projectStore.project;
 
-  const teamsList = teams.map((team) => <TeamItem key={team.id} team={team} />);
+  const teamsList = teams.map((team) => (
+    <TeamItem
+      key={team.id}
+      team={team}
+      newScore={newScore}
+      setNewScore={setNewScore}
+    />
+  ));
 
   console.log("teamsList", teamsList);
   return (
@@ -33,22 +42,6 @@ const EvaluationScreen = () => {
         }}
       >
         <div>
-          <h1
-            style={{
-              textAlign: "center",
-              textTransform: "capitalize",
-            }}
-          >
-            {/* {project === null ? "loading" : project.name} */}
-          </h1>
-          <h5
-            style={{
-              textAlign: "center",
-              textTransform: "capitalize",
-            }}
-          >
-            {/* {project === null ? "loading" : project.semester.name} */}
-          </h5>
           <h6
             style={{
               textAlign: "center",
