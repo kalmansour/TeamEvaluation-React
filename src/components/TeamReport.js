@@ -1,3 +1,4 @@
+// Libraries
 import React from "react";
 import { observer } from "mobx-react";
 
@@ -21,11 +22,11 @@ const TeamReport = ({ selectTeamId }) => {
   const total = WAverageArraySum / WAverageArray.length;
 
   const judges = teamScore.map((score) => score.judge);
-  function onlyUniqueJudges(value, index, self) {
+  const note = teamScore.map((score) => score.note);
+  function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
   }
-  const uniqueJudges = judges.filter(onlyUniqueJudges);
-  console.log("uniqueJudges", uniqueJudges);
+  const uniqueJudges = judges.filter(onlyUnique);
 
   return (
     <div>
@@ -80,6 +81,24 @@ const TeamReport = ({ selectTeamId }) => {
           ) : (
             <></>
           )}
+          <h2
+            style={{
+              textAlign: "center",
+            }}
+          >
+            Notes
+          </h2>
+          <hr
+            style={{
+              backgroundColor: "black",
+              height: 5,
+            }}
+          />
+          {teamScore.length > 0 ? (
+            <h4>
+              {uniqueJudges[0]} says: {note.filter(onlyUnique)[0]}
+            </h4>
+          ) : null}
         </>
       ) : (
         <h4 style={{ textAlign: "center" }}>Select a team from above</h4>
