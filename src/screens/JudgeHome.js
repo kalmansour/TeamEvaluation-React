@@ -7,15 +7,11 @@ import { useParams, Link } from "react-router-dom";
 
 // Stores
 import projectStore from "../stores/projectStore";
-import teamStore from "../stores/teamStore";
 
 const JudgeHome = () => {
   const [judgeName, setJudgeName] = useState(null);
   const { projectId } = useParams();
 
-  const teams = teamStore.teams.filter(
-    (team) => team.project.id === parseInt(projectId)
-  );
   projectStore.fetchProjectDetails(parseInt(projectId));
   const project = projectStore.project;
 
@@ -39,14 +35,14 @@ const JudgeHome = () => {
           >
             {project === null ? "loading" : project.name}
           </h1>
-          <h5
+          <h3
             style={{
               textAlign: "center",
               textTransform: "capitalize",
             }}
           >
             {project === null ? "loading" : project.semester.name}
-          </h5>
+          </h3>
           <div class="input-group">
             <span class="input-group-text" id="basic-addon1">
               Judge Name:

@@ -4,8 +4,9 @@ import { observer } from "mobx-react";
 
 // Stores
 import scoreStore from "../stores/scoreStore";
+import { Link } from "react-router-dom";
 
-const TeamItem = ({ team, newScore, setNewScore }) => {
+const TeamItem = ({ team, newScore, setNewScore, projectId, judgeName }) => {
   const [showCriteria, setShowCriteria] = useState(false);
   const [criteriaId, setcriteriaId] = useState(null);
 
@@ -78,13 +79,14 @@ const TeamItem = ({ team, newScore, setNewScore }) => {
                   value={newScore.score}
                 />
               </div>
-              <button
-                class="btn btn-outline-success float-end"
-                // type="submit"
-                style={{ marginTop: 10, marginLeft: 10 }}
-              >
-                Done
-              </button>
+              <Link to={`/projects/${projectId}/${judgeName}/score/done`}>
+                <button
+                  class="btn btn-outline-success float-end"
+                  style={{ marginTop: 10, marginLeft: 10 }}
+                >
+                  Done
+                </button>
+              </Link>
               <button
                 class="btn btn-outline-danger float-end"
                 type="submit"

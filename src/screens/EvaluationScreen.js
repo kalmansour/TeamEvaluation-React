@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 
 // Stores
 import teamStore from "../stores/teamStore";
+import projectStore from "../stores/projectStore";
 
 // Component
 import TeamItem from "../components/TeamItem";
@@ -28,10 +29,14 @@ const EvaluationScreen = () => {
       team={team}
       newScore={newScore}
       setNewScore={setNewScore}
+      projectId={projectId}
+      judgeName={judgeName}
     />
   ));
 
-  console.log("teamsList", teamsList);
+  projectStore.fetchProjectDetails(parseInt(projectId));
+  const project = projectStore.project;
+
   return (
     <div>
       <div
@@ -42,17 +47,44 @@ const EvaluationScreen = () => {
         }}
       >
         <div>
-          <h6
+          <h1
             style={{
               textAlign: "center",
               textTransform: "capitalize",
             }}
           >
+            {project === null ? "loading" : project.name}
+          </h1>
+          <h3
+            style={{
+              textAlign: "center",
+              textTransform: "capitalize",
+            }}
+          >
+            {project === null ? "loading" : project.semester.name}
+          </h3>
+          <h4
+            style={{
+              textAlign: "center",
+              textTransform: "capitalize",
+              margin: 10,
+            }}
+          >
             {judgeName === null ? "loading" : `Hi ${judgeName}`}
-          </h6>
+          </h4>
         </div>
       </div>
-      <div>{teamsList}</div>
+      <div
+        style={{
+          marginLeft: "auto",
+          marginRight: "auto",
+          marginTop: 20,
+          paddingLeft: 10,
+          paddingRight: 10,
+        }}
+      >
+        {teamsList}
+      </div>
     </div>
   );
 };
