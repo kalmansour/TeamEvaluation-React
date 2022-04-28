@@ -1,71 +1,36 @@
-# Getting Started with Create React App
+# Team Evaluation React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To run this folder, npm install required packages.
 
-## Available Scripts
+npm start to run Team Evaluation react app.
 
-In the project directory, you can run:
+Here are the following features of the web app and how to navigate them:
 
-### `npm start`
+## Create Semesters
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Add Semester button adds a new semester.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Create Projects
 
-### `npm test`
+- Within a semester you can add a Project by pressing the add project button.
+- **Note: When adding a project's criteria, click on each criteria individually (ignore the highlights) before submitting new project.**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Add Teams
 
-### `npm run build`
+- Within a project you can add a Team by pressing the add team button.
+- Add members to the team by seperating each name by a comma.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Team Report
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Click on a semster project bar to go to the project's team report page.
+- On the top right corner you may share the link of the porject to an evaluator by pressing on the copy-to-clipboard button.
+- On the top you make choose which team report you'd like to view.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Judging the project
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# TeamEvaluation-React
+- **When opening the link please change the "localhost:8000" to localhost:3000 to open the evaluation link.**
+- On the top right corner you may share the link of the porject to an evaluator by pressing on the copy-to-clipboard button
+- Judges should enter their name
+- Judges should choose which team they want to evaluate
+- **For the criterias, make sure to select each criteria individually from the dropdown menu then type the score and click submit. After giving each criteria a score submission you may click on done.**
+- After navigate to the team report page to see each team's report.
