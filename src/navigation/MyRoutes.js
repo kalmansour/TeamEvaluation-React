@@ -9,12 +9,28 @@ import AdminHome from "../screens/AdminHome";
 import AddProject from "../screens/AddProject";
 import AddCriteria from "../screens/AddCriteria";
 import ProjectDetailScreen from "../screens/ProjectDetailScreen";
+import JudgeHome from "../screens/JudgeHome";
+import EvaluationScreen from "../screens/EvaluationScreen";
+import DoneScreen from "../screens/DoneScreen";
 
 const MyRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/projects/:projectId" element={<ProjectDetailScreen />} />
+        <Route
+          path="/projects/:projectId/:judgeName/score/done"
+          element={<DoneScreen />}
+        />
+        <Route
+          path="/projects/:projectId/:judgeName/score"
+          element={<EvaluationScreen />}
+        />
+
+        <Route path="/projects/:projectId" element={<JudgeHome />} />
+        <Route
+          path="/projects/:projectId/report"
+          element={<ProjectDetailScreen />}
+        />
         <Route path="/addCriteria/" element={<AddCriteria />} />
         <Route path="/project/:semesterId" element={<AddProject />} />
         <Route path="/home/" element={<AdminHome />} />

@@ -8,24 +8,32 @@ import { Link } from "react-router-dom";
 // Stores
 import projectStore from "../stores/projectStore";
 import teamStore from "../stores/teamStore";
+import scoreStore from "../stores/scoreStore";
 
 // Components
 import TeamHeader from "../components/TeamHeader";
+import ShareLinkModal from "../components/ShareLinkModal";
+import TeamReport from "../components/TeamReport";
 
 // Styles
 import "./styles.css";
 import { BsHouseFill, BsLockFill, BsShareFill } from "react-icons/bs";
-import ShareLinkModal from "../components/ShareLinkModal";
 
 const ProjectDetailScreen = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [selectTeamId, setSelectTeamId] = useState(null);
   const project = projectStore.project;
 
   const teams = teamStore.teams.filter(
     (team) => team.project.id === project.id
   );
   const teamsList = teams.map((team) => (
-    <TeamHeader team={team} key={team.id} />
+    <TeamHeader
+      team={team}
+      key={team.id}
+      selectTeamId={selectTeamId}
+      setSelectTeamId={setSelectTeamId}
+    />
   ));
 
   function intersperse(arr, sep) {
@@ -48,6 +56,8 @@ const ProjectDetailScreen = () => {
   function closeModal() {
     setIsOpen(false);
   }
+
+  const scoreTable = <TeamReport selectTeamId={selectTeamId} />;
 
   return (
     <div>
@@ -106,33 +116,15 @@ const ProjectDetailScreen = () => {
             >
               <div>{project.semester.name}</div>
             </h4>
-            <h6
+            <div
               style={{
-                textAlign: "center",
-                textTransform: "capitalize",
-                color: "grey",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
               }}
             >
-              This project has been graded by 2 judges
-            </h6>
-            <div style={{ display: "flex", flexDirection: "row" }}>
               {teamsList.length > 0 ? (
-                <>
-                  <h5
-                    style={{
-                      paddingRight: 10,
-                      paddingLeft: 10,
-                      border: "solid",
-                      borderLeft: 0,
-                      borderTop: 0,
-                      borderBottom: 0,
-                    }}
-                    className="teamName"
-                  >
-                    {"All"}
-                  </h5>
-                  {intersperse(teamsList, "| ")}
-                </>
+                <>{intersperse(teamsList, "| ")}</>
               ) : (
                 <h5
                   style={{
@@ -159,27 +151,7 @@ const ProjectDetailScreen = () => {
           paddingRight: 20,
         }}
       >
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Criteria</th>
-              <th scope="col">Avg. Score</th>
-              <th scope="col">Criteria Weight</th>
-              <th scope="col">Weighted Avg.</th>
-            </tr>
-          </thead>
-          {project.criteria.map((criteria_) => (
-            <tbody>
-              <tr>
-                <th scope="row">{criteria_.name}</th>
-                <td>20 %</td>
-                <td>{criteria_.weight}</td>
-                <td>{project.weight}</td>
-              </tr>
-            </tbody>
-          ))}
-        </table>
-        <h2 style={{ textAlign: "right" }}>Total: 100%</h2>
+        {teams.length > 0 ? scoreTable : <></>}
       </div>
       <div style={{ position: "absolute", zIndex: 1 }}>
         <ShareLinkModal

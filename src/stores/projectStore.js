@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, flow, runInAction } from "mobx";
 import instance from "./instance";
 
 class ProjectStore {
@@ -19,15 +19,17 @@ class ProjectStore {
     }
   };
 
-  fetchProjectDetails = async (projectId) => {
+  fetchProjectDetails = flow(function* (projectId) {
     try {
-      const res = await instance.get(`/projects/${projectId}`);
-      this.project = res.data;
-      this.loading = false;
+      const res = yield instance.get(`/projects/${projectId}`);
+      runInAction(() => {
+        this.project = res.data;
+        this.loading = false;
+      });
     } catch (error) {
       console.log("ProjectStore -> fetchProjectDetails -> error", error);
     }
-  };
+  });
 
   createProject = async (newProject, semesterId) => {
     try {
@@ -41,6 +43,5 @@ class ProjectStore {
 
 const projectStore = new ProjectStore();
 projectStore.fetchProjects();
-// projectStore.fetchProjectDetails();
 
 export default projectStore;

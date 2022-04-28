@@ -1,5 +1,6 @@
 .teamName:hover {
     color: blue;
+    text-decoration: underline;
   }
 
 .teamName:active {

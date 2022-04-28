@@ -43,7 +43,7 @@ const ProjectItem = ({ project }) => {
 
   const handleProjectDetailsChange = async (id) => {
     await projectStore.fetchProjectDetails(id);
-    navigate(`/projects/${id}`);
+    navigate(`/projects/${id}/report`);
   };
 
   return (
