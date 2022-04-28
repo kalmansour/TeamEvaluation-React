@@ -29,6 +29,7 @@ const AddProject = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await projectStore.createProject(newProject, semesterId);
+    projectStore.fetchProjects();
     navigate("/home");
   };
 

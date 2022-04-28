@@ -24,8 +24,10 @@ const AdminHome = () => {
     if (!authStore.user) return <Navigate to="/" />;
   };
 
-  const usersSemesters = semesterStore.semesters.filter(
-    (semester) => semester.added_by.username === authStore.user.username
+  if (semesterStore.loading || authStore.loading) return <h1>Loading...</h1>;
+
+  const usersSemesters = semesterStore?.semesters.filter(
+    (semester) => semester.added_by?.username === authStore.user?.username
   );
 
   const semesterList = usersSemesters
@@ -44,6 +46,7 @@ const AdminHome = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await semesterStore.createSemester(newSemester);
+    semesterStore.fetchSemesters();
     setShow(false);
   };
 

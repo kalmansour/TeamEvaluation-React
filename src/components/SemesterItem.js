@@ -12,7 +12,7 @@ const SemesterItem = ({ semester, projects }) => {
   const [showProject, setShowProject] = useState(false);
 
   const semesterProjects = projects.filter(
-    (project) => project.semester.id === semester.id
+    (project) => project.semester?.id === semester?.id
   );
 
   const projectsList = semesterProjects.map((project) => (

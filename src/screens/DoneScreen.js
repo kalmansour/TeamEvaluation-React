@@ -34,8 +34,8 @@ const DoneScreen = () => {
             Thanks for the evaluation {judgeName}!
           </h2>
           <img
-            src="https://cdn3.iconfinder.com/data/icons/simple-web-navigation/165/tick-512.png"
-            alt="tick"
+            src={require("../media/swoosh.png")}
+            alt="swoosh"
             width={300}
             height={300}
             style={{

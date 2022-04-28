@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 // Stores
 import projectStore from "../stores/projectStore";
 import teamStore from "../stores/teamStore";
-import scoreStore from "../stores/scoreStore";
 
 // Components
 import TeamHeader from "../components/TeamHeader";
@@ -24,8 +23,9 @@ const ProjectDetailScreen = () => {
   const [selectTeamId, setSelectTeamId] = useState(null);
   const project = projectStore.project;
 
+  if (projectStore.loading || teamStore.loading) return <h1>Loading..</h1>;
   const teams = teamStore.teams.filter(
-    (team) => team.project.id === project.id
+    (team) => team.project?.id === project?.id
   );
   const teamsList = teams.map((team) => (
     <TeamHeader
@@ -105,7 +105,7 @@ const ProjectDetailScreen = () => {
                 textTransform: "capitalize",
               }}
             >
-              {project.name}
+              {project?.name}
             </h1>
             <h4
               style={{
@@ -114,7 +114,7 @@ const ProjectDetailScreen = () => {
                 color: "grey",
               }}
             >
-              <div>{project.semester.name}</div>
+              <div>{project?.semester.name}</div>
             </h4>
             <div
               style={{
@@ -157,7 +157,7 @@ const ProjectDetailScreen = () => {
         <ShareLinkModal
           modalIsOpen={modalIsOpen}
           closeModal={closeModal}
-          url={project.detail}
+          url={project?.detail}
         />
       </div>
     </div>
