@@ -79,6 +79,20 @@ const TeamItem = ({ team, newScore, setNewScore, projectId, judgeName }) => {
                   value={newScore.score}
                 />
               </div>
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">
+                  Note:
+                </span>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter note"
+                  aria-label="Recipient's username with two button addons"
+                  onChange={handleChange}
+                  name={"note"}
+                  value={newScore.note}
+                />
+              </div>
               <Link to={`/projects/${projectId}/${judgeName}/score/done`}>
                 <button
                   class="btn btn-outline-success float-end"

@@ -17,6 +17,7 @@ const EvaluationScreen = () => {
   const [newScore, setNewScore] = useState({
     judge: judgeName,
     score: "",
+    note: "",
   });
 
   const teams = teamStore.teams.filter(
